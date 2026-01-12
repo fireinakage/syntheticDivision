@@ -4,6 +4,7 @@ let power3 = 0;
 let power2 = 0;
 let power1 = 0;
 let power0 = 0;
+let divisor = 0;
 
 function changeValue(val) {
     if (val == 5) {
@@ -18,8 +19,22 @@ function changeValue(val) {
         power1 = document.getElementById("1power").value
     } else if (val == 0) {
         power0 = document.getElementById("0power").value
-    }
+    } else if (val == -1) {
+        divisor = document.getElementById("divisor").value }
 
     console.log(power5, power4, power3, power2, power1, power0)
 }
 
+function calculate(•{
+add1 = power5 * divisor;
+left = power4 + add1;
+add2 = Number(left * divisor);
+left = Number (power3 + add2);
+add = left2 * divisor;
+left = Number (power2 + add3);
+add = left * divisor;
+left = power1 + add4;
+add5 = left * divisor;
+remainder = powero + add5;
+document.getElementById("results"). innerHTML = ${left1} ${left2} ${left3} ${left4} $
+{remainder} ${divisor} + typeof left3 }
