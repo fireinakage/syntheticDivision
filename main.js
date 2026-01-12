@@ -27,14 +27,14 @@ function changeValue(val) {
 
 function calculate(•{
 add1 = power5 * divisor;
-left = power4 + add1;
-add2 = Number(left * divisor);
-left = Number (power3 + add2);
-add = left2 * divisor;
-left = Number (power2 + add3);
-add = left * divisor;
-left = power1 + add4;
-add5 = left * divisor;
-remainder = powero + add5;
+left1 = power4 + add1;
+add2 = Number(left1 * divisor);
+left2 = Number (power3 + add2);
+add3 = left2 * divisor;
+left3 = Number (power2 + add3);
+add4 = left3 * divisor;
+left4 = power1 + add4;
+add5 = left4 * divisor;
+remainder = power0 + add5;
 document.getElementById("results"). innerHTML = ${left1} ${left2} ${left3} ${left4} $
 {remainder} ${divisor} + typeof left3 }
