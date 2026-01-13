@@ -33,6 +33,23 @@ Retrieved 2026-01-12, License - CC BY-SA 4.0
             margin-left: 0;
             width: 375px;
         }
+        .f {
+          display: inline-block;
+        }
+        .t {
+          text-align: center;
+          border-bottom: .5px solid black;
+        }
+        .b {
+          border-top: .5px solid black;
+          text-align: center;
+        }
+        #t1.t {
+          padding-bottom: 5px;
+        }
+        #b1.b {
+          padding-top: 5px;
+        }
     </style>
 
 </head>
@@ -44,7 +61,11 @@ Retrieved 2026-01-12, License - CC BY-SA 4.0
     </div>
     <div>
         <div>YOUR EQUATION :</div>
-        <div> 
+        <br>
+        <div id="yint">Y-Intercept = 0</div>
+        <div id="x">X = 0</div>
+        <br>
+        <div class="t" id="t1"> 
             <input type="number" id="5power" oninput="changeValue(5)"> <label>x<sup>5</sup></label> 
             + 
             <input type="number" id="4power" oninput="changeValue(4)"> <label>x<sup>4</sup></label>
@@ -57,8 +78,18 @@ Retrieved 2026-01-12, License - CC BY-SA 4.0
             +  
             <input type="number" id="0power" oninput="changeValue(0)"> 
         </div>
-        <hr id="divider">
+        <div class="b" id="b1">
+            x +
+            <input type="number" id="divisor" oninput="changeValue(-1)">
+        </div>
 
+    </div>
+
+    <br> <br>
+
+    <div>
+        <div>YOUR RESULT :</div>
+        <div id="results"> </div>
     </div>
     <script src="main.js"></script>
 </body>
