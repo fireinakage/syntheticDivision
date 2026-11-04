@@ -48,5 +48,9 @@ function calculate() {
   add5 = left4 * divisor;
   remainder = power0 + add5;
   oposite = Math.abs(divisor)
-  document.getElementById("results").innerHTML = `${add1}x<sup>4</sup> + ${add2}x<sup>3</sup> + ${add3}x<sup>2</sup> + ${add4}x + ${add5} + <span class="f"><div class="t">${remainder}</div><div class="b">x ${posneg} ${oposite}</div></span>` 
+  if (remainder == 0) {
+    document.getElementById("results").innerHTML = `${power5}x<sup>4</sup> + ${left1}x<sup>3</sup> + ${left2}x<sup>2</sup> + ${left3}x + ${left4}` 
+  } else {
+      document.getElementById("results").innerHTML = `${power5}x<sup>4</sup> + ${left1}x<sup>3</sup> + ${left2}x<sup>2</sup> + ${left3}x + ${left4} + <span class="f"><div class="t">${remainder}</div><div class="b">x ${posneg} ${oposite}</div></span>` 
+  }
 }
