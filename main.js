@@ -97,7 +97,7 @@ function calculate() {
         <td><mark>${left2}</mark></td>
         <td><mark>${left3}</mark></td>
         <td><mark>${left4}</mark></td>
-        <td class="remainder">${remainder}</td>
+        <td class="remainder"><mark>${remainder}</mark></td>
       </tr>
     </table>
     <ol class="explanation">
