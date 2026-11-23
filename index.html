@@ -2,6 +2,9 @@
 <html>
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         /*
 Source - https://stackoverflow.com/a
@@ -17,38 +20,165 @@ Retrieved 2026-01-12, License - CC BY-SA 4.0
             margin: 0;
         }
 
+        body {
+            margin: 0;
+            padding: 40px 20px 100px;
+            background: #FAFAF7;
+            color: #1C1C1C;
+            font-family: "Source Serif 4", Georgia, serif;
+        }
+
         #header {
             text-align: center;
+            border-bottom: 1px solid #D8D5CC;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
         }
 
         #title {
-            font-size: 50px;
+            font-size: 42px;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .section-label {
+            font-size: 15px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .panel {
+            max-width: 640px;
+            margin: 0 auto 36px;
         }
 
         input {
-            width: 25px;
+            width: 32px;
+            text-align: center;
+            font-family: "JetBrains Mono", ui-monospace, monospace;
+            font-size: 15px;
+            border: none;
+            border-bottom: 2px solid #D8D5CC;
+            background: transparent;
+            padding: 2px 0;
+            color: #1C1C1C;
+            transition: border-color 0.15s ease;
+        }
+        input:focus {
+            outline: none;
+            border-bottom-color: #2B5D8C;
+        }
+        #divisor {
+            border-bottom-color: #2B5D8C;
+            color: #2B5D8C;
+            font-weight: bold;
+        }
+
+        #divs {
+            margin: 16px auto;
+            width: 100%;
+            max-width: 500px;
+            border: none;
+            border-top: 2px solid #1C1C1C;
+        }
+
+        .f {
+            display: inline-block;
+            vertical-align: middle;
             text-align: center;
         }
-        #divider {
-            margin-left: 0;
-            width: 375px;
-        }
-        .f {
-          display: inline-block;
-        }
         .t {
-          text-align: center;
-          border-bottom: .5px solid black;
+            text-align: center;
         }
         .b {
-          border-top: .5px solid black;
-          text-align: center;
+            text-align: center;
         }
         #t1.t {
-          padding-bottom: 5px;
+            padding-bottom: 5px;
+            text-align: center;
         }
         #b1.b {
-          padding-top: 5px;
+            padding-top: 5px;
+        }
+        .frac-num {
+            text-align: center;
+            border-bottom: 1px solid #1C1C1C;
+            padding: 0 2px 2px;
+            line-height: 1.1;
+        }
+        .frac-den {
+            text-align: center;
+            padding: 2px 2px 0;
+            line-height: 1.1;
+        }
+
+        table.synthetic {
+            border-collapse: collapse;
+            margin: 1em auto;
+            font-family: "JetBrains Mono", ui-monospace, monospace;
+        }
+        table.synthetic td {
+            width: 40px;
+            text-align: center;
+            padding: 4px;
+        }
+        table.synthetic .coeffs {
+            border-bottom: 2px solid #1C1C1C;
+        }
+        table.synthetic .divisor-box {
+            border-right: 2px solid #1C1C1C;
+            color: #2B5D8C;
+            font-weight: bold;
+        }
+        table.synthetic .sums td {
+            font-weight: bold;
+        }
+        table.synthetic .sums td.remainder {
+            color: #2B5D8C;
+        }
+
+        ol.explanation {
+            font-family: "Source Serif 4", Georgia, serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #444;
+            margin-top: 12px;
+        }
+
+        #divs-wrap {
+            color: black;
+        }
+
+        #results, #steps {
+            background: #fff;
+            border: 1px solid #D8D5CC;
+            border-radius: 2px;
+            padding: 16px 20px;
+            display: block;
+            font-family: "JetBrains Mono", ui-monospace, monospace;
+            font-size: 16px;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        #disclaimer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+            font-size: 14px;
+            color: #777;
+            background: #FAFAF7;
+            border-top: 1px solid #D8D5CC;
+            padding: 10px 20px;
+            box-sizing: border-box;
+        }
+        mark {
+            background-color:#2B5D8C;
+            color: white;
+            padding: 2px;
         }
     </style>
 
@@ -56,42 +186,47 @@ Retrieved 2026-01-12, License - CC BY-SA 4.0
 
 <body>
     <div id="header">
-        <div id="title"><strong>Synthetic Division Help</strong></div>
+        <div id="title">Synthetic Division Help</div>
         Supports up to x<sup>5</sup>
     </div>
-    <div>
-        <div>YOUR EQUATION :</div>
-        <br>
+
+    <div class="panel" style="text-align: center;">
+        <div class="section-label">YOUR EQUATION :</div>
         <div id="yint">Y-Intercept = 0</div>
         <div id="x">X = 0</div>
         <br>
-        <div class="t" id="t1"> 
-            <input type="number" id="5power" oninput="changeValue(5)"> <label>x<sup>5</sup></label> 
-            + 
+        <div class="t" id="t1">
+            <input type="number" id="5power" oninput="changeValue(5)"> <label>x<sup>5</sup></label>
+            +
             <input type="number" id="4power" oninput="changeValue(4)"> <label>x<sup>4</sup></label>
-            + 
-            <input type="number" id="3power" oninput="changeValue(3)"> <label>x<sup>3</sup></label>  
-            + 
-            <input type="number" id="2power" oninput="changeValue(2)"> <label>x<sup>2</sup></label>  
+            +
+            <input type="number" id="3power" oninput="changeValue(3)"> <label>x<sup>3</sup></label>
+            +
+            <input type="number" id="2power" oninput="changeValue(2)"> <label>x<sup>2</sup></label>
             +
             <input type="number" id="1power" oninput="changeValue(1)"> <label>x</label>
-            +  
-            <input type="number" id="0power" oninput="changeValue(0)"> 
+            +
+            <input type="number" id="0power" oninput="changeValue(0)">
         </div>
+        <hr id="divs">
         <div class="b" id="b1">
             x +
             <input type="number" id="divisor" oninput="changeValue(-1)">
         </div>
-
     </div>
 
-    <br> <br>
-
-    <div>
-        <div>YOUR RESULT :</div>
+    <div class="panel" style="text-align: center;">
+        <div class="section-label">YOUR RESULT :</div>
         <div id="results"> </div>
     </div>
+
+    <div class="panel" style="text-align: center;">
+        <div class="section-label">STEPS :</div>
+        <div id="steps"> </div>
+    </div>
+
     <script src="main.js"></script>
+    <div id="disclaimer"><u>DISCLAIMER:</u> This is meant to be a tool for helping with Synthetic Division, and a subsitute for using AI. Do not use this to cheat, use this for assistance if you're stuck and/or want to check your work. If you are caught cheating, your teacher has the right to remove access to this calculator. All code was made by a human with assitance of AI for design recommendations.</div>
 </body>
 
 </html>

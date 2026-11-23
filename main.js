@@ -36,6 +36,27 @@ function changeValue(val) {
     calculate()
 }
 
+function formatPoly(terms) {
+  // terms: array of { value: number, label: string } from highest to lowest degree
+  const nonZero = terms.filter(t => t.value !== 0);
+
+  if (nonZero.length === 0) {
+    return "0";
+  }
+
+  return nonZero
+    .map((t, i) => {
+      const abs = Math.abs(t.value);
+      const sign = t.value < 0 ? "-" : "+";
+      const term = `${abs}${t.label}`;
+      // first term keeps its sign only if negative; no leading "+"
+      return i === 0
+        ? (t.value < 0 ? `-${term}` : term)
+        : ` ${sign} ${term}`;
+    })
+    .join("");
+}
+
 function calculate() {
   add1 = power5 * divisor;
   left1 = power4 + add1;
@@ -47,10 +68,61 @@ function calculate() {
   left4 = power1 + add4;
   add5 = left4 * divisor;
   remainder = power0 + add5;
-  oposite = Math.abs(divisor)
+  oposite = Math.abs(divisor);
+
+  let stepsHTML = `
+    <table class="synthetic">
+      <tr class="coeffs">
+        <td class="divisor-box">${divisor}</td>
+        <td>${power5}</td>
+        <td>${power4}</td>
+        <td>${power3}</td>
+        <td>${power2}</td>
+        <td>${power1}</td>
+        <td>${power0}</td>
+      </tr>
+      <tr class="products">
+        <td></td>
+        <td></td>
+        <td>${add1}</td>
+        <td>${add2}</td>
+        <td>${add3}</td>
+        <td>${add4}</td>
+        <td>${add5}</td>
+      </tr>
+      <tr class="sums">
+        <td></td>
+        <td><mark>${power5}</mark></td>
+        <td><mark>${left1}</mark></td>
+        <td><mark>${left2}</mark></td>
+        <td><mark>${left3}</mark></td>
+        <td><mark>${left4}</mark></td>
+        <td class="remainder">${remainder}</td>
+      </tr>
+    </table>
+    <ol class="explanation">
+      <li>Bring down the leading coefficient: ${power5}</li>
+      <li>Multiply ${power5} × ${divisor} = ${add1}, add to ${power4} → ${left1}</li>
+      <li>Multiply ${left1} × ${divisor} = ${add2}, add to ${power3} → ${left2}</li>
+      <li>Multiply ${left2} × ${divisor} = ${add3}, add to ${power2} → ${left3}</li>
+      <li>Multiply ${left3} × ${divisor} = ${add4}, add to ${power1} → ${left4}</li>
+      <li>Multiply ${left4} × ${divisor} = ${add5}, add to ${power0} → remainder ${remainder}</li>
+    </ol>
+  `;
+  document.getElementById("steps").innerHTML = stepsHTML;
+
+  const quotient = formatPoly([
+    { value: power5, label: "x<sup>4</sup>" },
+    { value: left1,  label: "x<sup>3</sup>" },
+    { value: left2,  label: "x<sup>2</sup>" },
+    { value: left3,  label: "x" },
+    { value: left4,  label: "" }
+  ]);
+
   if (remainder == 0) {
-    document.getElementById("results").innerHTML = `${power5}x<sup>4</sup> + ${left1}x<sup>3</sup> + ${left2}x<sup>2</sup> + ${left3}x + ${left4}` 
+    document.getElementById("results").innerHTML = quotient;
   } else {
-      document.getElementById("results").innerHTML = `${power5}x<sup>4</sup> + ${left1}x<sup>3</sup> + ${left2}x<sup>2</sup> + ${left3}x + ${left4} + <span class="f"><div class="t">${remainder}</div><div class="b">x ${posneg} ${oposite}</div></span>` 
+    document.getElementById("results").innerHTML =
+      `${quotient} + <span class="f"><div class="frac-num">${remainder}</div><div class="frac-den">x ${posneg} ${oposite}</div></span>`;
   }
 }
